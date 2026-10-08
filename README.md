@@ -2,6 +2,8 @@
 
 Keeps your Windows PC (and, if you like, its screen) from going to sleep, with a simple window and a tray icon.
 
+![Stay Awake screenshot](<Stay Awake - screenshot.png>)
+
 ## The window (`Stay Awake.ps1`)
 
 - One big button: **Keep me awake** / **Let it sleep**
