@@ -9,7 +9,11 @@ using System;
 using Microsoft.Win32;
 public class PowerSettings {
     public static void SetKeepAway() {
-        SetThreadExecutionState(0x8000 | 0x0002);
+        // ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED
+        SetThreadExecutionState(0x80000000 | 0x00000001 | 0x00000002);
+    }
+    public static void Release() {
+        SetThreadExecutionState(0x80000000);
     }
     
     [System.Runtime.InteropServices.DllImport("kernel32.dll")]
@@ -32,7 +36,7 @@ try {
         "San Antonio" = "San Antonio, TX";
     }
 
-    $logFile = "C:\Users\local-admin\Desktop\weather_log.csv"
+    $logFile = Join-Path ([Environment]::GetFolderPath("Desktop")) "weather_log.csv"
 
     while ($true) {
         try {
@@ -106,6 +110,6 @@ try {
     }
 } finally {
     # Restore sleep settings when stopped
-    [PowerSettings]::SetThreadExecutionState(0x0000)
+    [PowerSettings]::Release()
     Write-Host "`n=== Awake mode disabled. Computer can now sleep. ===" -ForegroundColor Green
 }
